@@ -1,88 +1,175 @@
-# Quant Developer Evaluation Assignment
+📊 Real-Time Quantitative Analytics Dashboard
 
-## 📌 Project Title
+Binance Futures | Live Market Analytics | Quant Research Prototype
 
-**Real-Time Quantitative Analytics Dashboard using Binance Tick Data**
+🚀 Overview
 
----
+This project is a real-time quantitative analytics dashboard built to demonstrate an end-to-end market data pipeline used in quantitative trading and research environments.
 
-## 1️⃣ Architecture Diagram (draw.io)
+It ingests live tick data from Binance Futures via WebSockets, processes and resamples the data in real time, computes statistical and trading analytics, and visualizes the results through an interactive Streamlit dashboard.
 
-See `architecture.drawio` for the source.
-Architecture flow:
-Binance WebSocket -> Python Ingestion -> In-Memory Buffer <-> SQLite -> Resampling -> Analytics (Core + Advanced) -> Streamlit Dashboard.
+The system is modular, extensible, and designed to closely resemble how professional quant research platforms are structured.
 
----
+🧠 System Architecture
 
-## 2️⃣ README.md (Final Version)
+Refer to:
 
-### 🚀 Overview
+architecture.drawio – editable diagram
 
-This project is a **real-time quantitative analytics dashboard** designed to ingest live tick data from Binance Futures, compute key statistical and trading analytics, and visualize them interactively. The system demonstrates an end-to-end pipeline from streaming data ingestion to live analytics and alerting, suitable for a quantitative trading or research environment.
+architecture.png – exported image
 
-### 🧱 Architecture
+🔁 Data Flow
+Binance WebSocket Feed
+        ↓
+Async Python Ingestion Service
+        ↓
+In-Memory Buffer (Pandas) ↔ SQLite (Persistent Storage)
+        ↓
+Resampling Engine (1s / 1m / 5m)
+        ↓
+Core Analytics Engine
+        ↓
+Advanced Analytics Modules
+        ↓
+Alert Engine
+        ↓
+Streamlit Dashboard
 
-* **Data Ingestion:** Async WebSocket connection to Binance
-* **Storage:** In-memory Pandas + SQLite persistence
-* **Sampling:** 1-second, 1-minute, and 5-minute resampling
-* **Analytics:** OLS regression, spread, z-score, ADF test, rolling correlation, Kalman Filter, Backtesting.
-* **Frontend:** Streamlit + Plotly
-* **Alerts:** Rule-based threshold alerts
+🧩 Design Rationale
 
-### 📊 Analytics Implemented
+Loosely coupled components
 
-* Price statistics
-* Hedge ratio via OLS regression and Kalman Filter
-* Spread computation
-* Z-score (rolling mean & std)
-* Augmented Dickey-Fuller (ADF) test
-* Rolling correlation
-* Backtesting Module
-* Multi-symbol Heatmaps
+Analytics layer isolated for easy extension
 
-### ⚙️ How to Run
+Storage supports both real-time and historical replay
 
-1. Open a PowerShell terminal.
-2. Run the master launcher script:
-   ```powershell
-   ./Start.ps1
-   ```
-   This will install dependencies, setup the database, start the ingestion service, analytics engines, and the dashboard.
+Scalable to Kafka / Redis / ClickHouse in future
 
-### 📥 Data Export
+📊 Analytics Implemented
+🔹 Core Analytics
 
-* Download resampled data as CSV
-* Download analytics outputs
+Price statistics
 
-### 🔔 Alerts
+OLS hedge ratio (static)
 
-* User-defined z-score thresholds
-* Real-time evaluation with UI notification
+Spread computation
 
-### 🧩 Extensibility
+Rolling Z-score
 
-* New data feeds can be added without changing analytics
-* New analytics modules can be plugged in
-* Scalable to Kafka / Redis / ClickHouse
+Rolling correlation
 
-### 📌 Limitations
+Augmented Dickey-Fuller (ADF) stationarity test
 
-* Designed as a prototype
-* Not production-hardened
-* Single-machine execution
+🔹 Advanced Analytics
 
----
+Kalman Filter hedge ratio (dynamic)
 
-## 3️⃣ ChatGPT / AI Usage Disclosure (MANDATORY)
+Mean-reversion backtesting engine
 
-### 📄 Text to Include in README
+Multi-symbol correlation heatmaps
 
-> **AI Assistance Disclosure:**
->
-> ChatGPT was used to assist with code structuring, architectural planning, analytics formulation, and documentation clarity. All generated code and designs were reviewed, modified, and validated by the author. The final implementation decisions, analytics logic, and system integration were performed manually.
+🔔 Alerts
+
+Rule-based alert engine
+
+Live Z-score threshold monitoring
+
+Visual notifications in the UI
+
+🖥️ Frontend (Streamlit)
+
+Live price metrics
+
+Spread & Z-score charts
+
+Statistical test execution (on-demand)
+
+Backtest PnL visualization
+
+Heatmap visualization
+
+CSV export functionality
+
+⚠️ UI updates in near-real-time using controlled refresh cycles
+(This avoids performance issues common with tick-by-tick rendering.)
+
+⚙️ How to Run the System
+Prerequisites
+
+Python 3.10+
+
+PowerShell (Windows)
+
+▶️ One-Command Startup
+./Start.ps1
 
 
-###  Latest Feature Updates (Compliance)
-* **OHLC Upload**: Added File Uploader to analyze external CSV data.
-* **Live Controls**: Added Auto-Refresh toggle and Rolling Window slider.
-* **On-Demand Analytics**: Added trigger button for ADF Test.
+This script:
+
+Creates virtual environment
+
+Installs dependencies
+
+Initializes SQLite database
+
+Starts Binance ingestion
+
+Launches Streamlit dashboard
+
+Dashboard URL:
+
+http://localhost:8501
+
+📥 Data Input Options
+✅ Live Mode
+
+Binance Futures WebSocket
+
+Multi-symbol support
+
+✅ Offline Mode
+
+Upload CSV OHLC data
+
+Useful for backtesting and demos
+
+📌 Project Structure
+QuantAnalyticsDashboard/
+├── Start.ps1
+├── requirements.txt
+├── config.yaml
+├── README.md
+├── architecture.drawio
+├── architecture.png
+├── CHATGPT_USAGE.md
+│
+├── src/
+│   ├── ingestion/
+│   ├── storage/
+│   ├── analytics/
+│   │   ├── core/
+│   │   └── advanced/
+│   ├── alerts/
+│   └── frontend/
+│
+├── data/
+├── logs/
+└── tests/
+
+📌 Limitations
+
+Prototype / evaluation project
+
+Not production-hardened
+
+Single-machine execution
+
+Streamlit UI uses pull-based refresh (not push streaming)
+
+🧩 Extensibility
+
+Plug in new data feeds (REST, CSV, CME)
+
+Add new analytics modules easily
+
+Can be upgraded to Kafka + FastAPI + React for true streaming UI
