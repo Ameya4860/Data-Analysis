@@ -187,7 +187,7 @@ else:
     st.sidebar.metric("Hedge Ratio (Kalman)", f"{hedge_ratio:.4f}")
 
 # 2. Z-Score
-zscore = spread_analyzer.calculate_zscore(spread * 0, window=window_size)
+zscore = spread_analyzer.calculate_zscore(spread, window=window_size)
 
 # 3. Correlation
 correlation = corr_analyzer.calculate(df['close_y'], df['close_x'], window=window_size)

@@ -9,6 +9,8 @@
 ## 1️⃣ Architecture Diagram (draw.io)
 
 See `architecture.drawio` for the source.
+
+![Architecture Diagram](architecture_diagram.png)
 Architecture flow:
 Binance WebSocket -> Python Ingestion -> In-Memory Buffer <-> SQLite -> Resampling -> Analytics (Core + Advanced) -> Streamlit Dashboard.
 
