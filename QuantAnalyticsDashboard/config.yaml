@@ -1,0 +1,25 @@
+database:
+  db_path: "data/tick_data.db"
+
+ingestion:
+  binance_wss_url: "wss://fstream.binance.com/ws"
+  symbols:
+    - "btcusdt"
+    - "ethusdt"
+    - "solusdt"
+    - "bnbusdt"
+
+analytics:
+  timeframes:
+    - "1s"
+    - "1m"
+    - "5m"
+  z_score:
+    window: 20
+  hedge_ratio:
+    window: 100
+    method: "ols" # or "kalman"
+
+frontend:
+  title: "Quant Analytics Dashboard"
+  refresh_rate_ms: 1000

@@ -1,0 +1,11 @@
+streamlit
+pandas
+numpy
+plotly
+statsmodels
+websockets
+aiohttp
+pyyaml
+scipy
+kaleido
+watchdog
